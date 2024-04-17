@@ -1,0 +1,12 @@
+<h1>Password#reset</h1>
+
+<p>
+Olá, <%= @customer.name %>
+<br>
+Recebemos uma solicitação para redefinir a senha associada à sua conta.<br>
+Se você não solicitou isso, por favor, ignore este e-mail.
+Para redefinir sua senha, clique no link abaixo:<br>
+<%= link_to "Reset Password", password_reset_edit_url(token: @token) %>
+<br>
+Este link expirará em 15 minutos, após o qual você precisará solicitar uma nova redefinição de senha.
+</p>
