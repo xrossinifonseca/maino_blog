@@ -22,6 +22,11 @@ class SessionController < ApplicationController
   end
 
 
+  def logout
+    cookies.delete(:auth_session)
+    cookies.delete(:check_session)
+    render json: { message: "Successful logout" }, status: :ok
+  end
 
 
   private
