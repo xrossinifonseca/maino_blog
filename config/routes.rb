@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     post '/session/login', to: 'session#login'
     post '/session/logout', to: 'session#logout'
 
+    patch '/password/update', to: 'customers#update_password'
     post '/password/reset', to: 'password_resets#create'
     patch '/password/reset/edit', to: 'password_resets#update'
 
