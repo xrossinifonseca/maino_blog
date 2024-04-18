@@ -6,6 +6,22 @@ class PostsController < ApplicationController
   before_action :authenticate_customer, only: [:create,:update, :destroy]
 
 
+
+  def index
+    begin
+      posts = Post.order(created_at: :desc).page(params["page"]).per(3)
+      total_pages = posts.total_pages
+
+      render json: { posts: posts, total_pages: total_pages }, status: :ok
+    rescue ActiveRecord::RecordNotFound
+      render json: { error: "Posts not found" }, status: :not_found
+    rescue => e
+      render json: { error: e.message }, status: :internal_server_error
+    end
+  end
+
+
+
   def create
     begin
       Post.transaction do
