@@ -1,13 +1,8 @@
 Rails.application.routes.draw do
-  get 'password_resets/new'
-  get 'password_resets/create'
-  get 'password_resets/edit'
-  get 'password_resets/update'
-
 
   scope "api/v1" do
      resources :customers, only: [:create]
-     resources :posts, only: [:create]
+     resources :posts, only: [:create,:index]
 
 
     post '/session/login', to: 'session#login'
