@@ -5,6 +5,7 @@ Rails.application.routes.draw do
      resources :posts, only: [:create,:index]
 
 
+
     post '/session/login', to: 'session#login'
     post '/session/logout', to: 'session#logout'
 
@@ -16,6 +17,7 @@ Rails.application.routes.draw do
     put 'posts/:id', to: "posts#update"
 
 
+    post 'comments/:id', to: 'comments#create'
 
 
 
