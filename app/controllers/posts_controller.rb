@@ -10,9 +10,13 @@ class PostsController < ApplicationController
   def index
     begin
       posts = Post.order(created_at: :desc).page(params["page"]).per(3)
-      total_pages = posts.total_pages
 
-      render json: { posts: posts, total_pages: total_pages }, status: :ok
+      posts_with_authors_name =  posts.map do |t|
+      {id:t.id,title:t.title,content:t.content,author:t.author.name,comments:t.comments}
+      end
+      total_pages = posts.total_pages
+      render json: { posts: posts_with_authors_name, total_pages: total_pages }, status: :ok
+
     rescue ActiveRecord::RecordNotFound
       render json: { error: "Posts not found" }, status: :not_found
     rescue => e
@@ -43,8 +47,13 @@ class PostsController < ApplicationController
     begin
       Post.transaction do
         post = Post.find(params["id"])
-        post.update!(post_params)
-        render json: { message: "Post successfully updated", post:post }, status: :ok
+
+        if does_post_belongs_customer?(post)
+          post.update!(post_params)
+          render json: { message: "Post successfully updated", post:post }, status: :ok
+        else
+          render json: { error: "You are not authorized to update this post" }, status: :forbidden
+        end
       end
 
     rescue ActiveRecord::RecordNotFound
@@ -61,8 +70,13 @@ class PostsController < ApplicationController
     begin
       Post.transaction do
         post = Post.find(params["id"])
-        post.destroy
-        render json: { message: "Post successfully deleted" }, status: :ok
+
+        if does_post_belongs_customer?(post)
+          post.destroy
+          render json: { message: "Post successfully deleted" }, status: :ok
+        else
+          render json: { error: "You are not authorized to delete this post" }, status: :forbidden
+        end
       end
     rescue ActiveRecord::RecordNotFound
       render json: { error: "Post not found" }, status: :not_found
@@ -77,12 +91,22 @@ class PostsController < ApplicationController
 
 
   private
+
+
+
+
   def authenticate_customer
     @customer = authenticated_customer
     if @customer.nil?
       return
     end
   end
+
+
+  def does_post_belongs_customer?(post)
+     post.author_id == @customer.id
+  end
+
 
   def post_params
     params.require(:post).permit(:title, :content)

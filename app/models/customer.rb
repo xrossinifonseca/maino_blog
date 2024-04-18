@@ -1,6 +1,6 @@
 class Customer < ApplicationRecord
   has_secure_password
-  has_many :posts, foreign_key: "author_id"
+  has_many :posts, foreign_key: "author_id", dependent: :destroy
 
   validates :name, presence: { message: "Name required" }
   validates :email, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
