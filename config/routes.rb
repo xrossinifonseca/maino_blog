@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     patch '/password/reset/edit', to: 'password_resets#update'
 
     delete 'posts/:id', to: "posts#destroy"
+    put 'posts/:id', to: "posts#update"
+
 
 
 
