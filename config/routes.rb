@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   scope "api/v1" do
      resources :customers, only: [:create]
+     resources :posts, only: [:create]
 
 
     post '/session/login', to: 'session#login'
@@ -15,6 +16,11 @@ Rails.application.routes.draw do
     patch '/password/update', to: 'customers#update_password'
     post '/password/reset', to: 'password_resets#create'
     patch '/password/reset/edit', to: 'password_resets#update'
+
+
+
+
+
 
 
   end
