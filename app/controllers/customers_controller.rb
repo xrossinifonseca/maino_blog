@@ -1,8 +1,5 @@
 class CustomersController < ApplicationController
 
-  include JwtAuthentication
-
-
   def create
     begin
         @customer = Customer.create!(customer_params)
@@ -18,10 +15,8 @@ class CustomersController < ApplicationController
 
 
   def update_password
-
       begin
           @customer = authenticated_customer
-
           if @customer.nil?
             return
           end
@@ -48,17 +43,6 @@ class CustomersController < ApplicationController
 
 
   private
-
-
-  def authenticated_customer
-    auth = authenticate(cookies)
-
-    if auth
-        Customer.find(auth["customer_id"])
-    end
-
-  end
-
   def customer_params
     params.permit(:name,:email,:password)
   end
