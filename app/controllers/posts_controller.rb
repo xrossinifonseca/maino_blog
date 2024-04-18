@@ -10,9 +10,13 @@ class PostsController < ApplicationController
   def index
     begin
       posts = Post.order(created_at: :desc).page(params["page"]).per(3)
-      total_pages = posts.total_pages
 
-      render json: { posts: posts, total_pages: total_pages }, status: :ok
+      posts_with_authors_name =  posts.map do |t|
+      {title:t.title,content:t.content,author:t.author.name}
+      end
+      total_pages = posts.total_pages
+      render json: { posts: posts_with_authors_name, total_pages: total_pages }, status: :ok
+
     rescue ActiveRecord::RecordNotFound
       render json: { error: "Posts not found" }, status: :not_found
     rescue => e
