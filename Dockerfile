@@ -22,7 +22,9 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential git libvips pkg-config
 
 
+
 RUN apt install libpq-dev -y
+
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
@@ -45,12 +47,16 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libsqlite3-0 libvips && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
+
+    
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
 
 COPY ./bin/docker-entrypoint /rails/bin/docker-entrypoint
 RUN chmod +x /rails/bin/docker-entrypoint
+RUN ["chmod", "-R", "+x", "./bin/docker-entrypoint"]
+
 
 # Run and own only the runtime files as a non-root user for security
 RUN useradd rails --create-home --shell /bin/bash && \
