@@ -13,13 +13,13 @@ ENV RAILS_ENV="production" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development"
 
+
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libvips pkg-config && \
-    apt-get install libpq-dev -y
+    apt-get install --no-install-recommends -y build-essential git libvips pkg-config
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
@@ -32,7 +32,6 @@ COPY . .
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
-
 
 
 # Final stage for app image
@@ -49,11 +48,8 @@ COPY --from=build /rails /rails
 
 # Run and own only the runtime files as a non-root user for security
 RUN useradd rails --create-home --shell /bin/bash && \
-    chown -R rails:rails /rails/db /rails/log /rails/storage /rails/tmp
+    chown -R rails:rails db log storage tmp
 USER rails:rails
-
-# Set executable permission for entrypoint script
-RUN chmod +x /rails/bin/docker-entrypoint
 
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
