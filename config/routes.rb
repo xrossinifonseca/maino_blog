@@ -20,8 +20,7 @@ Rails.application.routes.draw do
     post 'comments/:id', to: 'comments#create'
 
 
+    match '*unmatched_route', to: 'application#route_not_found', via: :all
 
   end
-
-
 end
