@@ -5,16 +5,16 @@
 #   gem "sqlite3"
 #
 default: &default
-  adapter: sqlite3
+  adapter: postgresql
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
-  username: <%= ENV['DB_USERNAME'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
-  host: <%= ENV['DB_HOST'] %>
+  username: <%= ENV['PGUSER'] %>
+  password: <%= ENV['PGPASSWORD'] %>
+  host: <%= ENV['PGHOST'] %>
 
 development:
   <<: *default
-  database: maino_blog_development
+  database: maino_blog
 
 test:
   <<: *default
@@ -23,4 +23,4 @@ test:
 production:
   <<: *default
   url: <%= ENV["DATABASE_URL"]%>
-  database: <%= ENV['DB_NAME'] %>
+  database: <%= ENV['PGDATABASE'] %>
