@@ -4,6 +4,13 @@
 ARG RUBY_VERSION=3.0.2
 FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
 
+
+
+RUN apt-get update -qq && \
+    apt-get install -y build-essential libvips bash bash-completion libffi-dev tzdata postgresql nodejs npm yarn && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /usr/share/doc /usr/share/man
+
 # Rails app lives here
 WORKDIR /rails
 
@@ -22,8 +29,9 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential libpq-dev
 
 
-
+RUN apt-get update && apt-get install libpq5 -y
 RUN apt install libpq-dev -y
+
 
 
 # Install application gems
