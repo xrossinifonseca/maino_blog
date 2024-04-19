@@ -13,7 +13,7 @@ gem "puma", ">= 5.0"
 
 gem "jwt"
 
-gem "pg"
+gem 'pg', '~> 0.18.4'
 
 gem 'kaminari'
 
