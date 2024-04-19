@@ -54,8 +54,14 @@ COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
 
 COPY ./bin/docker-entrypoint /rails/bin/docker-entrypoint
+COPY ./bin/rails /rails/bin/rails
+
 RUN chmod +x /rails/bin/docker-entrypoint
+RUN chmod +x /rails/bin/rails
+
 RUN ["chmod", "-R", "+x", "./bin/docker-entrypoint"]
+RUN ["chmod", "-R", "+x", "./bin/rails"]
+
 
 
 # Run and own only the runtime files as a non-root user for security
