@@ -13,6 +13,8 @@ gem "puma", ">= 5.0"
 
 gem "jwt"
 
+gem "pg"
+
 gem 'kaminari'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
