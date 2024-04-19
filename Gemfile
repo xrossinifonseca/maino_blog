@@ -52,3 +52,6 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 end
+
+
+gem 'dockerfile-rails', '~> 1.5', '>= 1.5.12'
