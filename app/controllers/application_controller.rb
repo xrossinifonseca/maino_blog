@@ -6,6 +6,10 @@ class ApplicationController < ActionController::API
 
 
 
+  def route_not_found
+    render json: { error: 'Not found' }, status: :not_found
+  end
+
   protected
   def authenticated_customer
     is_auth = authenticate(cookies)
