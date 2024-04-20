@@ -27,6 +27,11 @@ const router = createRouter({
           component: Signup,
           meta: "signup",
         },
+        {
+          path: "my-posts",
+          name: "my-posts",
+          component: MyPosts,
+        },
       ],
     },
   ],
