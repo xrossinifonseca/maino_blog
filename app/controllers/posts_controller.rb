@@ -6,14 +6,18 @@ class PostsController < ApplicationController
   before_action :authenticate_customer, only: [:create,:update, :destroy]
 
 
-
   def index
     begin
-      posts = Post.order(created_at: :desc).page(params["page"]).per(3)
+      posts = Posts::PostsTagQueryService.fetch_posts(params["tags"]).page(params["page"]).per(3)
 
-      posts_with_authors_name =  posts.map do |t|
-      {id:t.id,title:t.title,content:t.content,author:t.author.name,comments:t.comments}
+      if posts.present? && posts.length > 0
+        posts_with_authors_name =  posts.map do |t|
+        {id:t.id,title:t.title,content:t.content,author:t.author.name,comments:t.comments,tags:t.tags}
+        end
+      else
+        posts_with_authors_name = []
       end
+
       total_pages = posts.total_pages
       render json: { posts: posts_with_authors_name, total_pages: total_pages }, status: :ok
 
@@ -29,7 +33,9 @@ class PostsController < ApplicationController
   def create
     begin
       Post.transaction do
+
         post = Post.create!(post_params.merge(author_id: @customer.id))
+        Posts::AddTagsPostService.new(post).add_tags(params["tags"])
         render json: {message:"Post created successfully", post: post }, status: :created
       end
 
@@ -91,10 +97,6 @@ class PostsController < ApplicationController
 
 
   private
-
-
-
-
   def authenticate_customer
     @customer = authenticated_customer
     if @customer.nil?
@@ -109,6 +111,6 @@ class PostsController < ApplicationController
 
 
   def post_params
-    params.require(:post).permit(:title, :content)
+    params.require(:post).permit(:title, :content,:tags)
   end
 end
