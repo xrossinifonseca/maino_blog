@@ -10,11 +10,15 @@ import NavBar from "../components/NavBar.vue";
     </nav>
 
     <main class="w-full flex justify-center">
-      <div class="container">
+      <div class="container mt-10">
         <RouterView />
       </div>
     </main>
 
-    <footer>footer</footer>
+    <footer class="text-center mt-10 pb-2">
+      <a class="text-font-bold text-blue-primary"
+        >Desenvolvimento Rossini Fonseca</a
+      >
+    </footer>
   </div>
 </template>
