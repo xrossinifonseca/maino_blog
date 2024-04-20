@@ -1,5 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { Home, Layout, Login, MyPosts, Signup } from "../views";
+import {
+  Home,
+  Layout,
+  Login,
+  MyPosts,
+  NewPost,
+  Post,
+  RecoverPassword,
+  Signup,
+} from "../views";
+import { isAuthenticated } from "../auth/index";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,21 +26,60 @@ const router = createRouter({
           meta: "Home",
         },
         {
-          path: "/login",
-          name: "login",
-          component: Login,
-          meta: "login",
+          path: "post/:id",
+          name: "post",
+          component: Post,
         },
+
         {
-          path: "signup",
-          name: "signup",
-          component: Signup,
-          meta: "signup",
+          path: "",
+          name: "private",
+          beforeEnter: () => {
+            if (!isAuthenticated.value) {
+              return { name: "home" };
+            }
+          },
+          children: [
+            {
+              path: "my-posts",
+              name: "my-posts",
+              component: MyPosts,
+            },
+            {
+              path: "post/new",
+              name: "new",
+              component: NewPost,
+            },
+          ],
         },
+
         {
-          path: "my-posts",
-          name: "my-posts",
-          component: MyPosts,
+          path: "",
+          name: "public",
+          beforeEnter: () => {
+            if (isAuthenticated.value) {
+              return { name: "home" };
+            }
+          },
+          children: [
+            {
+              path: "/login",
+              name: "login",
+              component: Login,
+              meta: "login",
+            },
+            {
+              path: "signup",
+              name: "signup",
+              component: Signup,
+              meta: "signup",
+            },
+            {
+              path: "recover-password",
+              name: "recover-password",
+              component: RecoverPassword,
+            },
+          ],
         },
       ],
     },
@@ -72,10 +121,5 @@ export default router;
 //     meta: {
 //       title: 'login'
 //     },
-//     beforeEnter: () => {
-//       const store = useAuthAdminStore()
-//       if (store.authenticated) {
-//         return { name: 'layout' }
-//       }
-//     }
+
 //   }
