@@ -3,8 +3,7 @@ class PostsController < ApplicationController
   include JwtAuthentication
 
 
-  before_action :authenticate_customer, only: [:create,:update, :destroy]
-
+  before_action :authenticate_customer, only: [:create,:update, :destroy,:customer_posts]
 
   def index
     begin
@@ -12,7 +11,7 @@ class PostsController < ApplicationController
 
       if posts.present? && posts.length > 0
         posts_with_authors_name =  posts.map do |t|
-        {id:t.id,title:t.title,content:t.content,author:t.author.name,comments:t.comments,tags:t.tags}
+        {id:t.id,title:t.title,author:t.author.name,tags:t.tags.map(&:name),date:t.created_at}
         end
       else
         posts_with_authors_name = []
@@ -29,6 +28,25 @@ class PostsController < ApplicationController
   end
 
 
+  def show
+    begin
+    post = Post.find(params[:id])
+    post_data = {
+    id: post.id,
+    title: post.title,
+    content: post.content,
+    author: post.author.name,
+    tags: post.tags.map(&:name),
+    comments: post.comments}
+
+   render json: post_data, status: :ok
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: "Posts not found" }, status: :not_found
+  rescue => e
+    render json: { error: e.message }, status: :internal_server_error
+  end
+
+  end
 
   def create
     begin
@@ -93,6 +111,31 @@ class PostsController < ApplicationController
     end
   end
 
+
+  def customer_posts
+    begin
+
+        posts = @customer.posts.page(params["page"]).per(3)
+
+      if posts.length > 0
+        posts_data =  posts.map do |t|
+        {id:t.id,title:t.title,author:t.author.name,tags:t.tags.map(&:name),date:t.created_at}
+        end
+      else
+        posts_data = []
+      end
+
+      total_pages = posts.total_pages
+      render json: { posts: posts_data, total_pages: total_pages }, status: :ok
+
+    rescue ActiveRecord::RecordInvalid => e
+      render json: {error:e.message}, status: :unprocessable_entity
+    rescue => e
+      p e
+      render json: {error:"there was an internal failure"}, status: :internal_server_error
+    end
+
+  end
 
 
 
