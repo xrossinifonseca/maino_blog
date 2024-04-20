@@ -76,7 +76,7 @@ const filterPosts = () => {
         </h2>
       </div>
 
-      <div class="flex gap-2">
+      <div class="flex flex-wrap gap-2">
         <input
           type="text"
           v-model="query"
@@ -91,6 +91,7 @@ const filterPosts = () => {
         <CardPost
           v-for="post in posts"
           :key="post.id"
+          :id="post.id"
           :title="post.title"
           :author="post.author"
           :tags="post.tags"
