@@ -10,9 +10,8 @@ class PostsController < ApplicationController
   def index
     begin
       posts = Post.order(created_at: :desc).page(params["page"]).per(3)
-
       posts_with_authors_name =  posts.map do |t|
-      {id:t.id,title:t.title,content:t.content,author:t.author.name,comments:t.comments}
+      {id:t.id,title:t.title,content:t.content,author:t.author.name,comments:t.comments,tags:t.tags}
       end
       total_pages = posts.total_pages
       render json: { posts: posts_with_authors_name, total_pages: total_pages }, status: :ok
@@ -29,7 +28,9 @@ class PostsController < ApplicationController
   def create
     begin
       Post.transaction do
+
         post = Post.create!(post_params.merge(author_id: @customer.id))
+        Posts::AddTagsPostService.new(post).add_tags(params["tags"])
         render json: {message:"Post created successfully", post: post }, status: :created
       end
 
@@ -109,6 +110,6 @@ class PostsController < ApplicationController
 
 
   def post_params
-    params.require(:post).permit(:title, :content)
+    params.require(:post).permit(:title, :content,:tags)
   end
 end
