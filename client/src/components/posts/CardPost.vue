@@ -1,5 +1,7 @@
 <script setup>
-defineProps(["img", "title", "author", "date", "tags", "id"]);
+const props = defineProps(["img", "title", "author", "date", "tags", "id"]);
+
+const created = new Date(props.date);
 </script>
 
 <template>
@@ -12,20 +14,19 @@ defineProps(["img", "title", "author", "date", "tags", "id"]);
           {{ title }}
         </h1>
       </div>
-
       <ul class="flex flex-wrap gap-2 items-center" v-if="tags.length > 0">
         <li
           class="p-2 bg-slate-300 rounded-xl text-sm text-blue-primary"
-          v-for="tag in tags"
-          :key="tag.id"
+          v-for="(name, index) in tags"
+          :key="index"
         >
-          {{ tag.name }}
+          {{ name }}
         </li>
       </ul>
 
       <div class="flex items-center gap-2 justify-between text-slate-600">
         <h2>{{ author }}</h2>
-        <h3>{{ date }}</h3>
+        <h3>{{ created.toLocaleDateString("pt-BR") }}</h3>
       </div>
     </RouterLink>
   </div>
