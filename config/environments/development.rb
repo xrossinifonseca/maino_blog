@@ -38,7 +38,16 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-  config.action_mailer.default_url_options = {host: 'localhost:3000'}
+  # config.action_mailer.default_url_options = {host: 'rossinicode.com'}
+
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+
+  #   :address => 'sandbox.smtp.mailtrap.io',
+  #   :host => 'sandbox.smtp.mailtrap.io',
+  #   :port => '2525',
+  #   :authentication => :login
+  # }
 
 
   # Print deprecation notices to the Rails logger.
