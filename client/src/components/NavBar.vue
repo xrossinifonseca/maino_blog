@@ -1,7 +1,7 @@
 <script setup>
 import { RouterLink } from "vue-router";
 import Button from "./Button.vue";
-import { isAuthenticated, customer } from "../auth";
+import { isAuthenticated, customer, desconect } from "../auth";
 import { ref } from "vue";
 
 const drop = ref(false);
@@ -23,10 +23,10 @@ const toggleDrop = () => {
 
     <div v-show="!isAuthenticated">
       <ul class="flex items-center gap-4">
-        <RouterLink to="login" class="font-bold text-xl text-slate-800"
+        <RouterLink to="/login" class="font-bold text-xl text-slate-800"
           >Login</RouterLink
         >
-        <RouterLink to="signup">
+        <RouterLink to="/signup">
           <Button> Cadastrar </Button>
         </RouterLink>
       </ul>
@@ -66,9 +66,9 @@ const toggleDrop = () => {
         :data-open="drop"
         class="absolute text-blue-primary w-full px-2 bg-white top-10 data-[open=true]:h-28 h-0 flex flex-col gap-1 items-start overflow-y-hidden"
       >
-        <RouterLink to="my-posts" class="mt-2">Meus Posts</RouterLink>
-        <RouterLink>Minha conta</RouterLink>
-        <button>Sair</button>
+        <RouterLink to="/my-posts" class="mt-2">Meus Posts</RouterLink>
+        <RouterLink to="/my-account">Minha conta</RouterLink>
+        <button @click="desconect">Sair</button>
       </div>
     </div>
   </div>
