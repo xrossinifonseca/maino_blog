@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import { login } from "../service/axios";
+import { login, logout, profile } from "../service/axios";
 import router from "../router";
 
 const isAuthenticated = ref(document.cookie.includes("check_session"));
@@ -21,9 +21,21 @@ const authenticate = async (credentials) => {
   }
 };
 
-const logout = () => {
-  isAuthenticated.value = false;
-  customer.value = null;
+const check_session = async () => {
+  try {
+    const { data } = await profile();
+    customer.value = data;
+    isAuthenticated.value = true;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-export { isAuthenticated, customer, authenticate, logout };
+const desconect = () => {
+  logout();
+  isAuthenticated.value = false;
+  customer.value = null;
+  router.push("/");
+};
+
+export { isAuthenticated, customer, authenticate, desconect, check_session };
