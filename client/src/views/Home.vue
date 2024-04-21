@@ -99,6 +99,7 @@ const filterPosts = () => {
           :key="post.id"
           :id="post.id"
           :title="post.title"
+          :content="post.content"
           :author="post.author"
           :tags="post.tags"
           :date="post.date"
