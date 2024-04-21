@@ -23,9 +23,11 @@ const authenticate = async (credentials) => {
 
 const check_session = async () => {
   try {
-    const { data } = await profile();
-    customer.value = data;
-    isAuthenticated.value = true;
+    if (document.cookie.includes("check_session")) {
+      const { data } = await profile();
+      customer.value = data;
+      isAuthenticated.value = true;
+    }
   } catch (error) {
     console.log(error);
   }
