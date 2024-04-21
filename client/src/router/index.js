@@ -5,7 +5,7 @@ import {
   Login,
   MyPosts,
   NewPost,
-  Post,
+  Profile,
   RecoverPassword,
   Signup,
 } from "../views";
@@ -28,7 +28,7 @@ const router = createRouter({
         {
           path: "post/:id",
           name: "post",
-          component: Post,
+          component: () => import("../views/Post.vue"),
         },
 
         {
@@ -49,6 +49,11 @@ const router = createRouter({
               path: "post/new",
               name: "new",
               component: NewPost,
+            },
+            {
+              path: "my-account",
+              name: "profile",
+              component: Profile,
             },
           ],
         },
@@ -84,42 +89,9 @@ const router = createRouter({
       ],
     },
   ],
+  scrollBehavior(to, from, savedPosition) {
+    return { top: 0 };
+  },
 });
 
 export default router;
-
-// {
-//     path: '/',
-//     name: 'layout',
-//     meta: {
-//       title: 'Admin | Cyberteza'
-//     },
-//     component: LayoutView,
-//     beforeEnter: () => {
-//       const store = useAuthAdminStore()
-//       if (!store.authenticated) {
-//         return { name: 'login' }
-//       }
-//     },
-//     children: [
-//       {
-//         path: '',
-//         name: 'analytics',
-//         component: AnalyticsView
-//       },
-//       {
-//         path: 'produtos',
-//         name: 'products',
-//         component: ProductsViewVue
-//       }
-//     ]
-//   },
-//   {
-//     path: '/login',
-//     name: 'login',
-//     component: LoginViewVue,
-//     meta: {
-//       title: 'login'
-//     },
-
-//   }
