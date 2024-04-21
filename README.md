@@ -27,6 +27,9 @@ aplicação web que permite aos usuários criar, compartilhar e interagir com po
    - Endpoint: `GET /api/v1/profile`
    - Descrição: Permite que os usuários visualizem e atualizem suas informações de perfil.
 6. **Gerenciamento de Posts:**
+   - Upload de arquivo:
+     - Endpoint: `POST /api/v1/post/upload`
+     - Descrição: Permite a leitura de arquivos de texto para auxiliar no conteúdo do post
    - Criação de Posts:
      - Endpoint: `POST /api/v1/posts`
      - Descrição: Permite que os usuários criem novos posts.
@@ -44,7 +47,7 @@ aplicação web que permite aos usuários criar, compartilhar e interagir com po
      - Descrição: Permite que os usuários removam seus próprios posts.
    - Filtragem de Posts por Tags:
      - Endpoint: [Endpoint a ser definido]
-7. **Comentários em Posts:**
+8. **Comentários em Posts:**
    - Criação de Comentários:
      - Endpoint: `POST /api/v1/comments/:id`
      - Descrição: Permite que os usuários adicionem comentários a um post específico.
