@@ -1,9 +1,8 @@
 <script setup>
 import CardPost from "../components/posts/CardPost.vue";
 import Button from "../components/Button.vue";
-import { getPosts } from "../service/axios";
-import { computed, onBeforeMount, reactive, ref, watch } from "vue";
-import { useRouter } from "vue-router";
+import { customerPosts } from "../service/axios";
+import { onBeforeMount, reactive, ref, watch } from "vue";
 
 const posts = ref([]);
 const loading = ref(true);
@@ -12,11 +11,10 @@ const pages = reactive({
   currentPage: 1,
 });
 const query = ref("");
-const router = useRouter();
 
-const fetchPosts = async (query) => {
+const fetchPosts = async () => {
   loading.value = true;
-  const { data } = await getPosts(pages.currentPage, query);
+  const { data } = await customerPosts();
   posts.value = data.posts;
   pages.totalPages = data.total_pages;
   loading.value = false;
@@ -35,31 +33,18 @@ const nextPage = () => {
   pages.currentPage = pages.currentPage + 1;
 };
 
+const prevPage = () => {
+  if (pages.currentPage > 1) {
+    pages.currentPage = pages.currentPage - 1;
+  }
+};
+
 watch(
   () => pages.currentPage,
   () => {
     fetchPosts(query.value);
   }
 );
-
-const queryPath = computed(() => {
-  if (query.value) {
-    const modifiedQuery = query.value;
-
-    router.replace({ query: { tags: modifiedQuery }, replace: true });
-  } else {
-    return router.replace();
-  }
-});
-
-watch(query, () => {
-  queryPath.value;
-});
-
-const filterPosts = () => {
-  pages.currentPage = 1;
-  fetchPosts(query.value);
-};
 </script>
 
 <template>
@@ -85,10 +70,11 @@ const filterPosts = () => {
         <CardPost
           v-for="post in posts"
           :key="post.id"
+          :id="post.id"
           :title="post.title"
           :author="post.author"
           :tags="post.tags"
-          date="24 Abril 2024"
+          :date="post.date"
         />
       </div>
 
@@ -103,7 +89,10 @@ const filterPosts = () => {
           <span class="text-slate-600 text-sm"
             >Página {{ pages.currentPage }} de {{ pages.totalPages }}</span
           >
-          <Button @click="nextPage">Próximo</Button>
+          <div class="flex flex-wrap gap-4">
+            <Button @click="prevPage">Anterior</Button>
+            <Button @click="nextPage">Próxima</Button>
+          </div>
         </div>
       </div>
     </div>
