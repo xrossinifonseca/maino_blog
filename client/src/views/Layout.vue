@@ -1,6 +1,14 @@
 <script setup>
 import { RouterView } from "vue-router";
 import NavBar from "../components/NavBar.vue";
+import { check_session } from "../auth/";
+import { onBeforeMount, ref } from "vue";
+
+const loading = ref(true);
+onBeforeMount(async () => {
+  await check_session();
+  loading.value = false;
+});
 </script>
 
 <template>
@@ -9,7 +17,7 @@ import NavBar from "../components/NavBar.vue";
       <NavBar />
     </nav>
 
-    <main class="w-full flex justify-center">
+    <main class="w-full flex justify-center" v-show="!loading">
       <div class="container mt-10">
         <RouterView />
       </div>
