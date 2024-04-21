@@ -36,6 +36,7 @@ class PostsController < ApplicationController
     title: post.title,
     content: post.content,
     author: post.author.name,
+    author_id:post.author.id,
     tags: post.tags.map(&:name),
     comments: post.comments}
 
@@ -72,6 +73,7 @@ class PostsController < ApplicationController
       Post.transaction do
         post = Post.find(params["id"])
 
+
         if does_post_belongs_customer?(post)
           post.update!(post_params)
           render json: { message: "Post successfully updated", post:post }, status: :ok
@@ -96,6 +98,7 @@ class PostsController < ApplicationController
         post = Post.find(params["id"])
 
         if does_post_belongs_customer?(post)
+          PostTag.where(post_id: post.id).destroy_all
           post.destroy
           render json: { message: "Post successfully deleted" }, status: :ok
         else
