@@ -2,6 +2,7 @@
 import { reactive, ref } from "vue";
 import Button from "../components/Button.vue";
 import { createPost } from "../service/axios";
+import UploadFile from "../components/posts/UploadFile.vue";
 
 const values = reactive({
   title: "",
@@ -36,6 +37,10 @@ const onSubmit = async () => {
     values.title = "";
     values.tags = "";
     values.content = "";
+
+    setTimeout(() => {
+      messageSuccess.value = "";
+    }, 2000);
   } catch (error) {
     const {
       response: { data },
@@ -50,58 +55,63 @@ const onSubmit = async () => {
 <template>
   <div class="px-5 lg:px-10">
     <h1 class="text-3xl font-bold text-blue-primary text-center">Novo Post</h1>
-    <form
-      @submit.prevent="onSubmit"
-      class="mt-10 w-full bg-white py-10 max-sm:px-5 px-20 rounded-xl space-y-5"
-    >
-      <div class="text-center text-xl" v-if="messageSuccess">
-        <h1 class="text-green-600">{{ messageSuccess }}</h1>
-      </div>
-      <div class="flex flex-col gap-2">
-        <label for="title" class="text-slate-900 font-bold text-2xl"
-          >Título</label
-        >
-        <input
-          type="text"
-          v-model="values.title"
-          name="title"
-          autocomplete="organization-title"
-          class="p-5 bg-slate-300 rounded-xl outline-none"
-        />
-        <span v-if="errors.title" class="text-medium text-red-500 text-lg">{{
-          errors.title
-        }}</span>
-      </div>
 
-      <div class="flex flex-col gap-2">
-        <label for="tags" class="text-slate-900 font-bold text-2xl">Tags</label>
-        <input
-          type="text"
-          v-model="values.tags"
-          name="tags"
-          autocomplete="organization-title"
-          class="p-5 bg-slate-300 rounded-xl outline-none"
-        />
-      </div>
+    <div class="mt-10 w-full bg-white py-10 max-sm:px-5 px-20 rounded-xl">
+      <form @submit.prevent="onSubmit" class="w-full space-y-5">
+        <div class="text-center text-xl" v-if="messageSuccess">
+          <h1 class="text-green-600">{{ messageSuccess }}</h1>
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="title" class="text-slate-900 font-bold text-2xl"
+            >Título</label
+          >
+          <input
+            type="text"
+            v-model="values.title"
+            name="title"
+            autocomplete="organization-title"
+            class="p-5 bg-slate-300 rounded-xl outline-none"
+          />
+          <span v-if="errors.title" class="text-medium text-red-500 text-lg">{{
+            errors.title
+          }}</span>
+        </div>
 
-      <div class="flex flex-col gap-2">
-        <label for="content" class="text-slate-900 font-bold text-2xl"
-          >Conteúdo</label
-        >
-        <textarea
-          type="text"
-          v-model="values.content"
-          name="content"
-          class="p-5 bg-slate-300 rounded-xl outline-none min-h-40"
-        ></textarea>
-        <span v-if="errors.content" class="text-medium text-red-500 text-lg">{{
-          errors.content
-        }}</span>
-      </div>
+        <div class="flex flex-col gap-2">
+          <label for="tags" class="text-slate-900 font-bold text-2xl"
+            >Tags</label
+          >
+          <input
+            type="text"
+            v-model="values.tags"
+            name="tags"
+            autocomplete="organization-title"
+            class="p-5 bg-slate-300 rounded-xl outline-none"
+          />
+        </div>
 
-      <div class="flex justify-end">
-        <Button :loading="loading" type="submit"> Publicar </Button>
-      </div>
-    </form>
+        <div class="flex flex-col gap-2">
+          <label for="content" class="text-slate-900 font-bold text-2xl"
+            >Conteúdo</label
+          >
+          <textarea
+            type="text"
+            v-model="values.content"
+            name="content"
+            class="p-5 bg-slate-300 rounded-xl outline-none min-h-60"
+          ></textarea>
+          <span
+            v-if="errors.content"
+            class="text-medium text-red-500 text-lg"
+            >{{ errors.content }}</span
+          >
+          <UploadFile :values="values" />
+        </div>
+
+        <div class="flex justify-end">
+          <Button :loading="loading" type="submit"> Publicar </Button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
