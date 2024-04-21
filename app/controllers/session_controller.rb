@@ -35,12 +35,12 @@ class SessionController < ApplicationController
         value: token,
         httponly: true,
         secure: true,
-        same_site: "none"
+        same_site: :strict
       }
       cookies.signed[:check_session] = {
         value: "is authenticated",
         secure: true,
-        same_site: "none"
+        same_site: :strict
       }
   end
 
