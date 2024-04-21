@@ -1,7 +1,6 @@
 import axios from "axios";
-// https://mainoblog-production.up.railway.app/api/v1"
 const service = axios.create({
-  baseURL: "http://localhost:3000/api/v1",
+  baseURL: "https://mainoblog-production.up.railway.app/api/v1",
   withCredentials: true,
 });
 
