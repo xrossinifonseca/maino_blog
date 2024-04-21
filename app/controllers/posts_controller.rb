@@ -11,7 +11,7 @@ class PostsController < ApplicationController
 
       if posts.present? && posts.length > 0
         posts_with_authors_name =  posts.map do |t|
-        {id:t.id,title:t.title,author:t.author.name,tags:t.tags.map(&:name),date:t.created_at}
+        {id:t.id,title:t.title,author:t.author.name,content:t.content,tags:t.tags.map(&:name),date:t.created_at}
         end
       else
         posts_with_authors_name = []
