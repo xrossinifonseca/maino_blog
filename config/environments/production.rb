@@ -81,6 +81,17 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
   config.action_mailer.default_url_options = {host: 'rossinicode.com'}
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :user_name => ENV["USER_MAILTRAP"],
+    :password => ENV["PASSWORD_MAILTRAP"],
+    :address => 'live.smtp.mailtrap.io',
+    :host => 'live.smtp.mailtrap.io',
+    :port => '587',
+    :authentication => :login
+  }
+
+
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [
   #   "example.com",     # Allow requests from example.com

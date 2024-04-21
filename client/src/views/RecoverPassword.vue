@@ -3,7 +3,6 @@ import { reactive, ref } from "vue";
 import Button from "../components/Button.vue";
 import Input from "../components/Input.vue";
 import { recoverPassword } from "../service/axios";
-import router from "../router";
 
 const values = reactive({
   email: "",
@@ -23,15 +22,15 @@ const onSubmit = async () => {
   try {
     loading.value = true;
     const { data } = await recoverPassword(values.email);
-    messageSuccess.value = data.message;
-
+    messageSuccess.value = data?.message;
     values.email = "";
   } catch (error) {
     const {
       response: { data },
     } = error;
 
-    errors.name = data.error;
+    console.log(error);
+    errors.email = data.error;
   } finally {
     loading.value = false;
   }
