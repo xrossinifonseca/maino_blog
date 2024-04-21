@@ -25,12 +25,7 @@ const onSubmit = async () => {
     messageSuccess.value = data?.message;
     values.email = "";
   } catch (error) {
-    const {
-      response: { data },
-    } = error;
-
-    console.log(error);
-    errors.email = data.error;
+    errors.email = "Falha ao tentar enviar email";
   } finally {
     loading.value = false;
   }
