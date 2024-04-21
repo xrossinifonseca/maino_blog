@@ -6,3 +6,4 @@ export { default as Signup } from "./Signup.vue";
 export { default as RecoverPassword } from "./RecoverPassword.vue";
 export { default as NewPost } from "./NewPost.vue";
 export { default as Post } from "./Post.vue";
+export { default as Profile } from "./Profile.vue";
