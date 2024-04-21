@@ -146,6 +146,7 @@ const onSubmit = async () => {
           >Editar</Button
         >
         <button
+          type="button"
           @click.capture="remove"
           class="flex items-center justify-center text-white bg-red-600 py-2 px-4 rounded"
         >

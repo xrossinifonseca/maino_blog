@@ -10,6 +10,6 @@ class PasswordMailer < ApplicationMailer
 
     @token = @customer.signed_id(purpose: 'password_reset', expires_in: 15.minutes)
 
-    mail to: @customer.email
+    mail(to:@customer.email,subject:"Recuperar senha")
   end
 end

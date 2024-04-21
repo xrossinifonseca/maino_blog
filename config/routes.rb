@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     delete 'posts/:id', to: "posts#destroy"
     get 'posts/:id',to: "posts#show"
     put 'posts/:id', to: "posts#update"
+    post "post/upload", to: "posts#upload_content"
 
 
     patch "/customer/update", to: "customers#update"

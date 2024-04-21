@@ -1,6 +1,6 @@
 import axios from "axios";
 const service = axios.create({
-  baseURL: "https://mainoblog-production.up.railway.app/api/v1",
+  baseURL: "https://backend.rossinicode.com/api/v1",
   withCredentials: true,
 });
 
@@ -72,4 +72,19 @@ export const resetPassword = async (body) => {
 
 export const updateProfile = async (body) => {
   return service.patch("/customer/update", body);
+};
+
+export const uploadContent = async (file) => {
+  const formData = new FormData();
+
+  if (file) {
+    formData.append("upload", file);
+  }
+
+  const response = await service.post("post/upload", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response.data;
 };

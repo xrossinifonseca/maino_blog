@@ -115,6 +115,18 @@ class PostsController < ApplicationController
   end
 
 
+  def upload_content
+    file_upload = params["upload"]
+    content = Posts::UploadContentService.read(file_upload)
+
+    if content
+      render json: {message:"content found successfully",content:content}, status: :ok
+    else
+      render json: {message:"undetected text",content:content}, status: :unprocessable_entity
+    end
+  end
+
+
   def customer_posts
     begin
 
