@@ -1,7 +1,5 @@
 import axios from "axios";
-
-// baseURL: "https://mainoblog-production.up.railway.app/api/v1",
-
+// https://mainoblog-production.up.railway.app/api/v1"
 const service = axios.create({
   baseURL: "http://localhost:3000/api/v1",
   withCredentials: true,
@@ -27,16 +25,52 @@ export const login = async (body) => {
   return service.post("/session/login", body);
 };
 
+export const logout = async () => {
+  return service.post("/session/logout");
+};
+
 export const signup = async (body) => {
   return service.post("/customers", body);
 };
 
 export const recoverPassword = async (email) => {
-  return await service.post("/password/reset", {
+  return service.post("/password/reset", {
     email_address: email,
   });
 };
 
 export const createPost = async (body) => {
-  return await service.post("posts", body);
+  return service.post("posts", body);
+};
+
+export const getPost = async (id) => {
+  return service.get(`posts/${id}`);
+};
+
+export const commentPost = async (id, body) => {
+  return service.post(`comments/${id}`, body);
+};
+
+export const customerPosts = async () => {
+  return service.get("my-posts");
+};
+
+export const profile = async () => {
+  return service.get("profile");
+};
+
+export const deletePost = async (id) => {
+  return service.delete(`posts/${id}`);
+};
+
+export const updatePost = async (id, body) => {
+  return service.put(`posts/${id}`, body);
+};
+
+export const resetPassword = async (body) => {
+  return service.patch("password/update", body);
+};
+
+export const updateProfile = async (body) => {
+  return service.patch("/customer/update", body);
 };
