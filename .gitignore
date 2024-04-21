@@ -34,3 +34,4 @@
 
 /config/credentials/production.key
 node_modules
+dist
