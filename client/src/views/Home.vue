@@ -35,6 +35,12 @@ const nextPage = () => {
   pages.currentPage = pages.currentPage + 1;
 };
 
+const prevPage = () => {
+  if (pages.currentPage > 1) {
+    pages.currentPage = pages.currentPage - 1;
+  }
+};
+
 watch(
   () => pages.currentPage,
   () => {
@@ -95,7 +101,7 @@ const filterPosts = () => {
           :title="post.title"
           :author="post.author"
           :tags="post.tags"
-          date="24 Abril 2024"
+          :date="post.date"
         />
       </div>
 
@@ -106,11 +112,14 @@ const filterPosts = () => {
       </div>
 
       <div class="flex justify-end mt-10">
-        <div class="space-y-2">
+        <div class="space-y-2 text-end">
           <span class="text-slate-600 text-sm"
             >Página {{ pages.currentPage }} de {{ pages.totalPages }}</span
           >
-          <Button @click="nextPage">Próximo</Button>
+          <div class="flex flex-wrap gap-4">
+            <Button @click="prevPage">Anterior</Button>
+            <Button @click="nextPage">Próxima</Button>
+          </div>
         </div>
       </div>
     </div>
