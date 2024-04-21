@@ -12,7 +12,7 @@ const toggleDrop = () => {
 </script>
 
 <template>
-  <div class="container p-5 flex flex-wrap justify-between w-full">
+  <div class="container p-5 gap-2 flex flex-wrap justify-between w-full">
     <div>
       <RouterLink to="/">
         <h1 class="font-bold text-3xl text-slate-800">
