@@ -4,7 +4,7 @@ class PasswordResetsController < ApplicationController
 
   def create
     if @customer = Customer.find_by(email:params[:email_address])
-      PasswordMailer.with(customer: @customer).reset.deliver_later
+      PasswordMailer.with(customer: @customer).reset.deliver_now
       render json: { message: "Email sent with password reset instructions." }, status: :ok
     else
       render json: { error: "Email address not found." }, status: :not_found
