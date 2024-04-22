@@ -1,6 +1,6 @@
 import axios from "axios";
 
-let url = "http://localhost:3000";
+let url = "https://backend.rossinicode.com";
 const service = axios.create({
   baseURL: `${url}/api/v1`,
   withCredentials: true,
@@ -23,7 +23,7 @@ export const getPosts = async (page, tags) => {
 };
 
 export const login = async (body) => {
-  return service.post("session/login", body);
+  return service.post("/session/login", body);
 };
 
 export const logout = async () => {
