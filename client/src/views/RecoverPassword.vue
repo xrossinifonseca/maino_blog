@@ -22,8 +22,13 @@ const onSubmit = async () => {
   try {
     loading.value = true;
     const { data } = await recoverPassword(values.email);
-    messageSuccess.value = data?.message;
+    messageSuccess.value =
+      "Um email de recuperação de senha foi enviado para o seu endereço de email. Por favor, verifique sua caixa de entrada.";
     values.email = "";
+
+    setTimeout(() => {
+      messageSuccess.value = "";
+    }, 2000);
   } catch (error) {
     errors.email = "Falha ao tentar enviar email";
   } finally {

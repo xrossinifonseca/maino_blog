@@ -11,7 +11,6 @@ Rails.application.routes.draw do
 
     patch '/password/update', to: 'customers#update_password'
     post '/password/reset', to: 'password_resets#create'
-    patch '/password/reset/edit', to: 'password_resets#update'
     get "profile", to: 'customers#profile'
 
     get "my-posts", to: 'posts#customer_posts'
@@ -26,9 +25,9 @@ Rails.application.routes.draw do
 
     post 'comments/:id', to: 'comments#create'
 
-
-
     match '*unmatched_route', to: 'application#route_not_found', via: :all
-
   end
+
+  patch '/password/reset/edit', to: 'password_resets#update'
+
 end
