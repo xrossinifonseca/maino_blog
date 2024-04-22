@@ -17,7 +17,7 @@ module Posts
 
       tags_array = tags.split(",").map(&:strip)
       tags_array.each do |tag_name|
-        check_tag = Tag.find_or_create_by(name: tag_name)
+        check_tag = Tag.find_or_create_by(name: tag_name.downcase)
         @post.tags << check_tag unless @post.tags.include?(check_tag)
       end
     end
