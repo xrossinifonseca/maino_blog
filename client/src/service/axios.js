@@ -1,6 +1,8 @@
 import axios from "axios";
+
+let url = "http://localhost:3000";
 const service = axios.create({
-  baseURL: "https://backend.rossinicode.com/api/v1",
+  baseURL: `${url}/api/v1`,
   withCredentials: true,
 });
 
@@ -21,20 +23,26 @@ export const getPosts = async (page, tags) => {
 };
 
 export const login = async (body) => {
-  return service.post("/session/login", body);
+  return service.post("session/login", body);
 };
 
 export const logout = async () => {
-  return service.post("/session/logout");
+  return service.post("session/logout");
 };
 
 export const signup = async (body) => {
-  return service.post("/customers", body);
+  return service.post("customers", body);
 };
 
 export const recoverPassword = async (email) => {
-  return service.post("/password/reset", {
+  return service.post("password/reset", {
     email_address: email,
+  });
+};
+
+export const recoverEditPassword = async (token, newpassword) => {
+  return axios.patch(`${url}/password/reset/edit?token=${token}`, {
+    password: newpassword,
   });
 };
 
@@ -71,7 +79,7 @@ export const resetPassword = async (body) => {
 };
 
 export const updateProfile = async (body) => {
-  return service.patch("/customer/update", body);
+  return service.patch("customer/update", body);
 };
 
 export const uploadContent = async (file) => {
