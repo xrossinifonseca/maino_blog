@@ -7,6 +7,7 @@ import {
   NewPost,
   Profile,
   RecoverPassword,
+  ResetPassword,
   Signup,
 } from "../views";
 import { isAuthenticated } from "../auth/index";
@@ -85,6 +86,18 @@ const router = createRouter({
               component: RecoverPassword,
             },
           ],
+        },
+        {
+          path: "password/reset/edit",
+          component: ResetPassword,
+          name: "reset-password",
+          beforeEnter: (to, from, next) => {
+            if (to.query.token) {
+              next();
+            } else {
+              next("/");
+            }
+          },
         },
       ],
     },
