@@ -15,19 +15,23 @@ const toggleDrop = () => {
   <div class="container p-5 gap-2 flex flex-wrap justify-between w-full">
     <div>
       <RouterLink to="/">
-        <h1 class="font-bold text-3xl text-slate-800">
-          Mainô Blog
-        </h1></RouterLink
+        <h1 class="font-bold text-3xl text-white">Rails Blog</h1></RouterLink
       >
     </div>
 
     <div v-show="!isAuthenticated">
       <ul class="flex items-center gap-4">
-        <RouterLink to="/login" class="font-bold text-xl text-slate-800"
+        <RouterLink
+          to="/login"
+          class="font-bold text-blue-primary bg-white p-2 text-xl rounded-sm px-5"
           >Login</RouterLink
         >
         <RouterLink to="/signup">
-          <Button> Cadastrar </Button>
+          <button
+            class="font-bold text-xl bg-yellow-primary text-white p-2 rounded-sm bg-"
+          >
+            Cadastrar
+          </button>
         </RouterLink>
       </ul>
     </div>
@@ -37,17 +41,13 @@ const toggleDrop = () => {
       class="flex gap-2 items-center relative cursor-pointer"
       @click="toggleDrop"
     >
-      <h1 class="text-xl text-blue-primary font-medium">
+      <h1 class="text-xl text-white font-medium">
         Olá,
         <span class="capitalize">{{ customer?.name }}</span>
       </h1>
 
       <div :data-open="drop" class="w-4 rotate-180 data-[open=true]:rotate-0">
-        <svg
-          fill="#000000"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+        <svg fill="#fff" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
           <g
             id="SVGRepo_tracerCarrier"

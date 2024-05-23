@@ -7,6 +7,7 @@ const customer = ref(null);
 
 const authenticate = async (credentials) => {
   try {
+    credentials.email = credentials.email.toLowerCase();
     const { data } = await login(credentials);
 
     isAuthenticated.value = true;
