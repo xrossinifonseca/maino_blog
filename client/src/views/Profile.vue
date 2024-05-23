@@ -21,7 +21,7 @@ const onSubmit = async () => {
   }
 
   if (!values.name) {
-    values.name = customer.name;
+    values.name = customer.value.name;
   }
 
   loading.value = true;

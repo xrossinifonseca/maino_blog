@@ -13,7 +13,7 @@ onBeforeMount(async () => {
 
 <template>
   <div class="bg-gray-100 min-h-screen">
-    <nav class="flex justify-center w-full">
+    <nav class="flex justify-center w-full bg-blue-primary">
       <NavBar />
     </nav>
 

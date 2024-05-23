@@ -38,7 +38,17 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-  # config.action_mailer.default_url_options = {host: 'rossinicode.com'}
+  config.action_mailer.default_url_options = {host: 'localhost:3002'}
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :user_name => '70fc7d8b45c2a7',
+    :password => 'dc6e84b11882e0',
+    :address => 'sandbox.smtp.mailtrap.io',
+    :host => 'sandbox.smtp.mailtrap.io',
+    :port => '2525',
+    :authentication => :login
+  }
 
   # config.action_mailer.delivery_method = :smtp
   # config.action_mailer.smtp_settings = {
