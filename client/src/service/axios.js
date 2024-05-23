@@ -1,6 +1,8 @@
 import axios from "axios";
 
 let url = "http://localhost:3000/";
+const baseUrl = import.meta.env.VITE_SERVICE_URL;
+console.log(baseUrl);
 const service = axios.create({
   baseURL: `${url}/api/v1`,
   withCredentials: true,
